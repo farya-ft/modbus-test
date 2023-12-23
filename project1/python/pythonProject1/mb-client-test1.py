@@ -5,9 +5,6 @@ client = ModbusSerialClient(method='rtu', port='/dev/ttyACM0', baudrate=9600, ti
 
 client.connect()
 
-
-d = client.write_coil(address=0x0,value=True,slave=1)
-
 while True:
     d = client.write_coil(address=0x0, value=True, slave=1)
     time.sleep(1)
