@@ -26,8 +26,13 @@ void setup() {
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, LOW);
 
+   // configure the LED
+  pinMode(D5, OUTPUT);
+  digitalWrite(D5, LOW);
+
+
   // configure a single coil at address 0x00
-  ModbusRTUServer.configureCoils(0x00, 1);
+  ModbusRTUServer.configureCoils(0x00, 2);
 }
 
 void loop() {
@@ -37,13 +42,21 @@ void loop() {
   if(packetReceived) {
     // read the current value of the coil
     int coilValue = ModbusRTUServer.coilRead(0x00);
-  
+    int coilValue1 = ModbusRTUServer.coilRead(0x01);
     if (coilValue) {
       // coil value set, turn LED on
       digitalWrite(ledPin, HIGH);
     } else {
       // coil value clear, turn LED off
       digitalWrite(ledPin, LOW);
+    }
+
+    if (coilValue1) {
+      // coil value set, turn LED on
+      digitalWrite(D5, HIGH);
+    } else {
+      // coil value clear, turn LED off
+      digitalWrite(D5, LOW);
     }
   }
 }
